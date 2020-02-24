@@ -6,8 +6,11 @@
 # We make no guarantees that this code is fit for any purpose.
 # Visit http://www.pragmaticprogrammer.com/titles/rails6 for more book information.
 #---
-class SupportRequest < ApplicationRecord
-  belongs_to :order, optional: true
+class SupportRequestMailer < ApplicationMailer
+  default from: "support@example.com"
 
-  has_rich_text :response
+  def respond(support_request)
+    @support_request = support_request
+    mail to: @support_request.email, subject: "Re: #{@support_request.subject}"
+  end
 end
